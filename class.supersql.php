@@ -1,11 +1,11 @@
 <?php
 /**
-* SuperSql is a simple PHP5 class which makes database handling easy. 
+* SuperSql is a simple PHP5 class which makes interacting with a database easy. 
 * Features:
 * - Connect to the database (on construction)
 * - Execute queries 
 * - Restore database from file
-* - Automatically restore database from file if delay expired
+* - Automatically restore database from file if given date expired
 * - Disconnect from database (on destruction)
 */
 class SuperSql
