@@ -15,6 +15,7 @@ class SuperSql
 	private $database 		= 'lgd';
 	private $username 		= 'root';
 	private $password 		= '';
+	private $timestampFile 		= "timestamp.ini";
 	/**
 	* DO NOT EDIT BELOW THIS LINE
 	* ///////////////////////////////////////////
@@ -24,6 +25,7 @@ class SuperSql
 	private $credentials 		= array(); 	// Will contain dsn, username and password for database connection
 	private $db 			= null;	// Will contain PDO object
 	private $query 			= null;	// will contain the query to execute
+	public  $status 			= '<strong>Status:</strong><br /><br />';	// will contain the status of the query
 	
 	/**
 	* Connect to database on construction
@@ -113,6 +115,55 @@ class SuperSql
 	}
 
 	/**
+	* Automatically restore a table from a given sql file when it's out of date
+	* @param $tableName string 	| Name of the table to truncate
+	* @param $filePath string 	| Path to an sql file containing a simple INSERT query
+	* @param $delay int 		| If current timestamp - stored timestamp >= $delay, table will be restored
+	* @return boolean 		| Return true on success, false if timestamp didn't expired
+	*/
+	function autoRestore($tableName, $filePath, $delay)
+	{
+		// If file doesn't exist, create it
+		if(file_exists($this->timestampFile)) {
+			// open and read file $file
+			$handle = fopen($this->timestampFile, "r+") or die('Cannot open file:  '.$this->timestampFile);
+			
+		} else {
+			$handle = fopen($this->timestampFile, "w+") or die('Cannot open file:  '.$this->timestampFile);
+			fwrite($handle, time());
+		}
+		// Store file content in a variable
+		$lastResetDate = fread($handle, filesize($this->timestampFile));
+
+		// If timestamp has expired, restore table
+		if(time() - $lastResetDate > $delay) {
+			// Replace the content of the file by the current timestamp
+			rewind($handle);
+			fwrite($handle, time());
+			fclose($handle);
+
+			$this->restore($tableName, $filePath);
+
+			$this->status .= 'TABLE RESTORED<br /><br />';
+			$this->status .= 'Last db reset: '.date('Y-m-d H:i:s' ,time()).'<br />';
+			$this->status .= 'Next db reset: '.date('Y-m-d H:i:s' ,$delay + time()).'<br />';
+
+			return true;
+		}
+		// There's time left
+		else {
+			fclose($handle);
+
+			$this->status .= 'WAITING..<br /><br />';
+			$this->status .= 'Last db reset: '.date('Y-m-d H:i:s' ,$lastResetDate).'<br />';
+			$this->status .= 'Next db reset: '.date('Y-m-d H:i:s' ,($delay - (time() - $lastResetDate)) + time()).'<br />';
+
+			return false;
+		}
+
+	}
+
+	/**
 	* Disconnect from database on destruction
 	*/
 	function __destruct() {
@@ -120,7 +171,14 @@ class SuperSql
 	}
 }
 
+// TESTING //////////////////////////////////////////
+
 $connection = new SuperSql();
+
+var_dump($connection->autoRestore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql', 10));
+echo "<pre>";
+print($connection->status);
+echo "</pre>";
 
 //var_dump($connection->restore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql'));
 
