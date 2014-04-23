@@ -1,10 +1,12 @@
 <?php
 /**
-* Connect to the database
-* Execute queries 
-* Restore database from file
-* Automatically restore database from file if delay expired
-* Disconnect from database
+* SuperSql is a simple PHP5 class which makes database handling easy. 
+* Features:
+* - Connect to the database (on construction)
+* - Execute queries 
+* - Restore database from file
+* - Automatically restore database from file if delay expired
+* - Disconnect from database (on destruction)
 */
 class SuperSql
 {
@@ -17,7 +19,7 @@ class SuperSql
 	private $database 		= 'lgd';
 	private $username 		= 'root';
 	private $password 		= '';
-	private $timestampFile 		= "timestamp.ini";
+	private $timestampFile 		= "timestamp.ini"; // file will be created if it doesn't exist
 	/**
 	* DO NOT EDIT BELOW THIS LINE
 	* ///////////////////////////////////////////
@@ -86,15 +88,6 @@ class SuperSql
 	}
 
 	/**
-	* Execute a TRUNCATE query, return nothing
-	* @param $tableName string 	| Name of the table to truncate
-	*/
-	function truncate($tableName) 
-	{
-		$this->execute('TRUNCATE '.$tableName, 0);
-	}
-
-	/**
 	* Restore a table from a given sql file
 	* @param $tableName string 	| Name of the table to truncate
 	* @param $filePath string 	| Path to an sql file containing a simple INSERT query
@@ -108,7 +101,7 @@ class SuperSql
 		fclose($handle);
 
 		// Make sure the table is empty
-		$this->truncate($tableName);
+		$this->execute('TRUNCATE '.$tableName, 0);
 
 		// Execute the sql file
 		$this->execute($sql) or die('Could not execute query.');
