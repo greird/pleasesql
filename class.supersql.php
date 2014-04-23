@@ -2,6 +2,8 @@
 /**
 * Connect to the database
 * Execute queries 
+* Restore database from file
+* Automatically restore database from file if delay expired
 * Disconnect from database
 */
 class SuperSql
