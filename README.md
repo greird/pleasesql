@@ -3,7 +3,7 @@ SuperSql
 
 ###Introduction###
 
-SuperSql is a simple PHP5 class which makes interacting with a database easy. 
+SuperSql is a simple PHP5 class to make interacting with a database easy. 
 
 Features:
 - Connect to the database (on construction)
