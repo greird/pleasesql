@@ -38,7 +38,7 @@ private $timestampFile        = "timestamp.ini"; // file will be created if it d
 
 ***
 
-###How to###
+###Usage###
 
 
 #####Connect to database#####
