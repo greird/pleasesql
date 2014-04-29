@@ -19,14 +19,14 @@ class SuperSql
 	private $database 		= 'lgd';
 	private $username 		= 'root';
 	private $password 		= 'root';
-	private $timestampFile 	= "timestamp.ini"; // file will be created if it doesn't exist
+	private $timestampFile 		= "timestamp.ini"; // file will be created if it doesn't exist
 	/**
 	* DO NOT EDIT BELOW THIS LINE
 	* ///////////////////////////////////////////
 	*/
 
 
-	private $credentials 	= array(); 	// Will contain dsn, username and password for database connection
+	private $credentials 		= array(); 	// Will contain dsn, username and password for database connection
 	private $db 			= null;	// Will contain PDO object
 	private $query 			= null;	// will contain the query to execute
 	public  $status 		= '';	// will contain the status of the query
@@ -165,28 +165,4 @@ class SuperSql
 		unset($this->db);
 	}
 }
-
-// TESTING //////////////////////////////////////////
-
-$connection = new SuperSql();
-
-var_dump($connection->autoRestore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql', 10));
-echo "<pre>";
-print($connection->status);
-echo "</pre>";
-
-//var_dump($connection->restore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql'));
-
-//var_dump($connection->execute("UPDATE  `lgd`.`lgd_demodata2` SET  `content` =  'Modification de la base' WHERE  `lgd_demodata2`.`id` =3;", 0));
-
-echo "<pre>";
-var_dump($connection->execute("SELECT content FROM lgd_demodata2 WHERE id='3'", 1));
-echo "</pre>";
-
-echo "<pre>";
-var_dump($connection->execute("SELECT * FROM lgd_demodata2", 2));
-echo "</pre>";
-
-
-unset($connection);
 ?>
