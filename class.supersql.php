@@ -18,18 +18,18 @@ class SuperSql
 	private $host 			= 'localhost';
 	private $database 		= 'lgd';
 	private $username 		= 'root';
-	private $password 		= '';
-	private $timestampFile 		= "timestamp.ini"; // file will be created if it doesn't exist
+	private $password 		= 'root';
+	private $timestampFile 	= "timestamp.ini"; // file will be created if it doesn't exist
 	/**
 	* DO NOT EDIT BELOW THIS LINE
 	* ///////////////////////////////////////////
 	*/
 
 
-	private $credentials 		= array(); 	// Will contain dsn, username and password for database connection
+	private $credentials 	= array(); 	// Will contain dsn, username and password for database connection
 	private $db 			= null;	// Will contain PDO object
 	private $query 			= null;	// will contain the query to execute
-	public  $status 			= '<strong>Status:</strong><br /><br />';	// will contain the status of the query
+	public  $status 		= '';	// will contain the status of the query
 	
 	/**
 	* Connect to database on construction
@@ -64,7 +64,7 @@ class SuperSql
 	function execute($sql, $fetchData = 0) 
 	{
 		$this->query = $this->db->prepare($sql);
-		$this->query->execute() or die('Could not execute query.');
+		$this->query->execute();
 		
 		switch ($fetchData) {
 			case 2:
@@ -104,7 +104,7 @@ class SuperSql
 		$this->execute('TRUNCATE '.$tableName, 0);
 
 		// Execute the sql file
-		$this->execute($sql) or die('Could not execute query.');
+		$this->execute($sql);
 
 		return true;
 	}
@@ -140,8 +140,8 @@ class SuperSql
 			$this->restore($tableName, $filePath);
 
 			$this->status .= 'TABLE RESTORED<br /><br />';
-			$this->status .= 'Last db reset: '.date('Y-m-d H:i:s' ,time()).'<br />';
-			$this->status .= 'Next db reset: '.date('Y-m-d H:i:s' ,$delay + time()).'<br />';
+			$this->status .= 'Last db reset: '.date('d/m H\hi' ,time()).'<br />';
+			$this->status .= 'Next data reset: '.date('d/m H\hi' ,$delay + time()).'<br />';
 
 			return true;
 		}
@@ -150,8 +150,8 @@ class SuperSql
 			fclose($handle);
 
 			$this->status .= 'WAITING..<br /><br />';
-			$this->status .= 'Last db reset: '.date('Y-m-d H:i:s' ,$lastResetDate).'<br />';
-			$this->status .= 'Next db reset: '.date('Y-m-d H:i:s' ,($delay - (time() - $lastResetDate)) + time()).'<br />';
+			$this->status .= 'Last db reset: '.date('d/m H\hi' ,$lastResetDate).'<br />';
+			$this->status .= 'Next data reset: '.date('d/m H\hi' ,($delay - (time() - $lastResetDate)) + time()).'<br />';
 
 			return false;
 		}
@@ -180,14 +180,11 @@ echo "</pre>";
 //var_dump($connection->execute("UPDATE  `lgd`.`lgd_demodata2` SET  `content` =  'Modification de la base' WHERE  `lgd_demodata2`.`id` =3;", 0));
 
 echo "<pre>";
-var_dump($connection->execute("SELECT content 
-            FROM lgd_demodata2
-            WHERE id='3'", 1));
+var_dump($connection->execute("SELECT content FROM lgd_demodata2 WHERE id='3'", 1));
 echo "</pre>";
 
 echo "<pre>";
-var_dump($connection->execute("SELECT * 
-            FROM lgd_demodata2", 2));
+var_dump($connection->execute("SELECT * FROM lgd_demodata2", 2));
 echo "</pre>";
 
 
