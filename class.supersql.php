@@ -1,6 +1,6 @@
 <?php
 /**
-* SuperSql is a simple PHP5 class to make interacting with a database easy.
+* PleaseSQL is a dead-simple php 5+ class that will painlessly execute any SQL query as long as you ask it kindly. 
 *  
 * FEATURES :
 * - Connect to the database (on construction)
@@ -12,16 +12,16 @@
 * @author Hubert Fauconnier
 * @copyright Copyright © 2016 Hubert Fauconnier
 * @license http://www.wtfpl.net/ WTFPL – Do What the Fuck You Want to Public License
-* @link https://github.com/greird/supersql
+* @link https://github.com/greird/pleasesql
 */
-class SuperSql
+class PleaseSQL
 {
 	/**
 	* ///////////////////////////////////////////
-	* SETTINGS - database information
+	* SETTINGS - Please insert your database information below
 	*/
 	private $host 			= 'localhost';
-	private $database 		= 'lgd';
+	private $database 		= 'test';
 	private $username 		= 'root';
 	private $password 		= 'root';
 	private $timestampFile 	= "timestamp.ini"; // file will be created if it doesn't exist
@@ -32,7 +32,7 @@ class SuperSql
 	private $credentials 	= array();	// Will contain dsn, username and password for database connection
 	private $db 			= null;		// Will contain PDO object
 	private $query 			= null;		// will contain the query to execute
-	public  $status 		= '';		// will contain the status of the query
+	public  $getStatus 		= '';		// will contain the status of the query
 	
 	/**
 	* Connect to database on construction
@@ -142,9 +142,9 @@ class SuperSql
 
 			$this->restore($tableName, $filePath);
 
-			$this->status .= 'TABLE RESTORED<br /><br />';
-			$this->status .= 'Last db reset: '.date('d/m H\hi' ,time()).'<br />';
-			$this->status .= 'Next data reset: '.date('d/m H\hi' ,$delay + time()).'<br />';
+			$this->getStatus .= 'TABLE RESTORED<br /><br />';
+			$this->getStatus .= 'Last db reset: '.date('d/m H\hi' ,time()).'<br />';
+			$this->getStatus .= 'Next data reset: '.date('d/m H\hi' ,$delay + time()).'<br />';
 
 			return true;
 		}
@@ -152,9 +152,9 @@ class SuperSql
 		else {
 			fclose($handle);
 
-			$this->status .= 'WAITING..<br /><br />';
-			$this->status .= 'Last db reset: '.date('d/m H\hi' ,$lastResetDate).'<br />';
-			$this->status .= 'Next data reset: '.date('d/m H\hi' ,($delay - (time() - $lastResetDate)) + time()).'<br />';
+			$this->getStatus .= 'WAITING..<br /><br />';
+			$this->getStatus .= 'Last db reset: '.date('d/m H\hi' ,$lastResetDate).'<br />';
+			$this->getStatus .= 'Next data reset: '.date('d/m H\hi' ,($delay - (time() - $lastResetDate)) + time()).'<br />';
 
 			return false;
 		}

@@ -1,24 +1,24 @@
 <?php
 require_once('../class.supersql.php');
 
-$connection = new SuperSql();
+$please = new PleaseSql();
 
-var_dump($connection->autoRestore('test', 'test.sql', 10));
+var_dump($please->autoRestore('test', 'test.sql', 10));
 echo "<pre>";
-print($connection->status);
+print($please->getStatus);
 echo "</pre>";
 
-//var_dump($connection->restore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql'));
+//var_dump($please->restore('lgd_demodata2', '../demo-login/sql/lgd_demodata2.sql'));
 
-//var_dump($connection->execute("UPDATE  `lgd`.`lgd_demodata2` SET  `content` =  'Modification de la base' WHERE  `lgd_demodata2`.`id` =3;", 0));
+//var_dump($please->execute("UPDATE  `lgd`.`lgd_demodata2` SET  `content` =  'Modification de la base' WHERE  `lgd_demodata2`.`id` =3;", 0));
 
 echo "<pre>";
-var_dump($connection->execute("SELECT content FROM test WHERE id='3'", 1));
+var_dump($please->execute("SELECT content FROM test WHERE id='1'", 1));
 echo "</pre>";
 
 echo "<pre>";
-var_dump($connection->execute("SELECT * FROM test", 2));
+var_dump($please->execute("SELECT * FROM test", 2));
 echo "</pre>";
 
-unset($connection);
+unset($please);
 ?>
