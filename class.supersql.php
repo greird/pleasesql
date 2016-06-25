@@ -1,35 +1,38 @@
 <?php
 /**
-* SuperSql is a simple PHP5 class to make interacting with a database easy. 
-* Features:
+* SuperSql is a simple PHP5 class to make interacting with a database easy.
+*  
+* FEATURES :
 * - Connect to the database (on construction)
 * - Execute queries 
 * - Restore database from file
 * - Automatically restore database from file if given date expired
 * - Disconnect from database (on destruction)
+* 
+* @author Hubert Fauconnier
+* @copyright Copyright © 2016 Hubert Fauconnier
+* @license http://www.wtfpl.net/ WTFPL – Do What the Fuck You Want to Public License
+* @link https://github.com/greird/supersql
 */
 class SuperSql
 {
 	/**
 	* ///////////////////////////////////////////
-	* 
 	* SETTINGS - database information
 	*/
 	private $host 			= 'localhost';
 	private $database 		= 'lgd';
 	private $username 		= 'root';
 	private $password 		= 'root';
-	private $timestampFile 		= "timestamp.ini"; // file will be created if it doesn't exist
+	private $timestampFile 	= "timestamp.ini"; // file will be created if it doesn't exist
 	/**
-	* DO NOT EDIT BELOW THIS LINE
 	* ///////////////////////////////////////////
 	*/
 
-
-	private $credentials 		= array(); 	// Will contain dsn, username and password for database connection
-	private $db 			= null;	// Will contain PDO object
-	private $query 			= null;	// will contain the query to execute
-	public  $status 		= '';	// will contain the status of the query
+	private $credentials 	= array();	// Will contain dsn, username and password for database connection
+	private $db 			= null;		// Will contain PDO object
+	private $query 			= null;		// will contain the query to execute
+	public  $status 		= '';		// will contain the status of the query
 	
 	/**
 	* Connect to database on construction
@@ -42,24 +45,24 @@ class SuperSql
 		}
 		else {
 			$this->credentials = array(
-			    "dsn" => "mysql:host=".$this->host.";dbname=".$this->database,
-			    "username" => $this->username,
-			    "password" => $this->password,
+				"dsn" => "mysql:host=".$this->host.";dbname=".$this->database,
+				"username" => $this->username,
+				"password" => $this->password,
 			);
 
 			try {
 				$this->db = new PDO($this->credentials['dsn'], $this->credentials['username'], $this->credentials['password']);
 			} catch (Exception $e) {
 				die ('Woops, could not connect to database: ' . $e->getMessage());
-            }
+			}
 		}
 	}
 
 	/**
 	* Execute a query and return the results either as an array or a string
-	* @param $sql string 			| Sql query
-	* @param $fetchType int 		| 2 will fetch all values and return an array, 1 will fetch the first value and return a string, 0 will only return 'true' on success		
-	* @return array / string / boolean	| Return either an array of all values or a string if $fetchType = 'single'
+	* @param $sql string Sql query
+	* @param $fetchType int 2 will fetch all values and return an array, 1 will fetch the first value and return a string, 0 will only return 'true' on success		
+	* @return array/string/boolean Return either an array of all values or a string if $fetchType = 'single'
 	*/
 	function execute($sql, $fetchData = 0) 
 	{
@@ -89,9 +92,9 @@ class SuperSql
 
 	/**
 	* Restore a table from a given sql file
-	* @param $tableName string 	| Name of the table to truncate
-	* @param $filePath string 	| Path to an sql file containing a simple INSERT query
-	* @return boolean 		| Return true on success
+	* @param $tableName string Name of the table to truncate
+	* @param $filePath string Path to an sql file containing a simple INSERT query
+	* @return boolean Return true on success
 	*/
 	function restore($tableName, $filePath)
 	{
@@ -111,10 +114,10 @@ class SuperSql
 
 	/**
 	* Automatically restore a table from a given sql file when it's out of date
-	* @param $tableName string 	| Name of the table to truncate
-	* @param $filePath string 	| Path to an sql file containing a simple INSERT query
-	* @param $delay int 		| If current timestamp - stored timestamp >= $delay, table will be restored
-	* @return boolean 		| Return true on success, false if timestamp didn't expired
+	* @param $tableName string Name of the table to truncate
+	* @param $filePath string Path to an sql file containing a simple INSERT query
+	* @param $delay int If current timestamp - stored timestamp >= $delay, table will be restored
+	* @return boolean Return true on success, false if timestamp didn't expired
 	*/
 	function autoRestore($tableName, $filePath, $delay)
 	{
