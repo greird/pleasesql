@@ -73,17 +73,17 @@ e.g.
 ```php
 // Return an array containing every results
 $please->execute("SELECT content 
-            FROM my_table", 2);
+            FROM mytable", 2);
 
 // Return a single string variable containing the first result
 $please->execute("SELECT content 
-            FROM my_table
+            FROM mytable
             WHERE id='3'", 1);
 
 // Return true on success
-$please->execute("TRUNCATE my_table", 0);
+$please->execute("TRUNCATE mytable", 0);
 // same as
-$please->execute("TRUNCATE my_table");
+$please->execute("TRUNCATE mytable");
 ```
 
 
@@ -124,7 +124,7 @@ $delay (int) is the time in seconds between each restoration.
 
 e.g.
 ```php
-// my_table will be restored every 24h
+// mytable will be restored every 24h
 $please->autoRestore('mytable', 'sql/mytable_backup.sql', 84600);
 ```
 
