@@ -73,17 +73,17 @@ e.g.
 ```php
 // Return an array containing every results
 $please->execute("SELECT content 
-            FROM my_table", 2));
+            FROM my_table", 2);
 
 // Return a single string variable containing the first result
 $please->execute("SELECT content 
             FROM my_table
-            WHERE id='3'", 1));
+            WHERE id='3'", 1);
 
 // Return true on success
-$please->execute("TRUNCATE my_table", 0));
+$please->execute("TRUNCATE my_table", 0);
 // same as
-$please->execute("TRUNCATE my_table"));
+$please->execute("TRUNCATE my_table");
 ```
 
 
@@ -99,13 +99,13 @@ $filePath is the relative path to an sql file containing an INSERT query.
 
 e.g.
 ```php
-$please->restore('my_table', 'sql/my_table_backup.sql');
+$please->restore('mytable', 'sql/mytable_backup.sql');
 ```
 
 The sql file must contain a simple INSERT query such as the one below
 
 ```sql
-INSERT INTO `lgd_demodata2` (`id`, `content`) VALUES
+INSERT INTO `mytable` (`id`, `content`) VALUES
 (1, 'Default content #1'),
 (2, 'Default content #2');
 ```
@@ -125,7 +125,7 @@ $delay (int) is the time in seconds between each restoration.
 e.g.
 ```php
 // my_table will be restored every 24h
-$please->autoRestore('my_table', 'sql/my_table_backup.sql', 84600);
+$please->autoRestore('mytable', 'sql/mytable_backup.sql', 84600);
 ```
 
 Note: If the last restoration date was 24h ago, the table will be restored as soon as the code will be executed --> when the page will be displayed.
