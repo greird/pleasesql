@@ -1,5 +1,5 @@
 <?php
-require_once('../class.supersql.php');
+require_once('../class.pleasesql.php');
 
 $please = new PleaseSql();
 
