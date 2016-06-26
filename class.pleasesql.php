@@ -40,7 +40,7 @@ class PleaseSQL
 	function __construct()
 	{
 		if(empty($this->host) || empty($this->database) || empty($this->username)) {
-			die('Incorrect database information. Host name, database name and username cannot be empty.');
+			die('Woops, your database information seems incorrect. Host name, database name and username cannot be empty.');
 			// Note: password can be empty (e.g. connection to a local database)
 		}
 		else {
@@ -83,7 +83,7 @@ class PleaseSQL
 				return true; 
 				break;
 			default:
-				die('Wrong parameter '.$fetchData.'. Expected 0, 1 or 2.');
+				die('Oh dear ! It looks like you\'ve entered a wrong parameter: '.$fetchData.'. Expected 0, 1 or 2.');
 				break;
 		}
 

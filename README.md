@@ -13,12 +13,7 @@ Features:
 - Restore table from an sql file
 - Automatically restore table from an sql file if given date expires
 - Disconnect from database (on destruction)
- 
-##Thoughtful warning##
 
-Actually, I would not recommend anyone to use this on a serious production environnement. I am no security expert nor am I a php nerd.
-I mainly use this for rapid prototyping on a local environnement. 
-You've been warned. ;)
 
 ***
 
