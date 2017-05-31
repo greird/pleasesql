@@ -1,7 +1,7 @@
 PleaseSQL
 ==========
 
-###Gentle introduction###
+### Gentle introduction
 
 Hi there, 
 
@@ -17,7 +17,7 @@ Features:
 
 ***
 
-###Pleasant configuration###
+### Pleasant configuration
 
 Edit the top block of the class to set your host name, database name, username and password.
 Additionnaly, you can edit the path to the file containing the date of the last table restoration. The file won't be created as long as you do not call the autoRestore method.
@@ -39,10 +39,10 @@ private $timestampFile 	= "timestamp.ini"; // file will be created if it doesn't
 
 ***
 
-###Courteous usage###
+### Courteous usage
 
 
-#####Connect to database#####
+##### Connect to database
 
 When initiated, the class will automatically try to connect to database.
 
@@ -51,7 +51,7 @@ $please = new PleaseSQL();
 ```
 
 
-#####Execute a query#####
+##### Execute a query
 
 ```php
 $please->execute($sql, $fetchData);
@@ -82,7 +82,7 @@ $please->execute("TRUNCATE mytable");
 ```
 
 
-#####Restore a table from a given sql file#####
+##### Restore a table from a given sql file
 
 ```php
 $please->restore($tableName, $filePath);
@@ -108,7 +108,7 @@ INSERT INTO `mytable` (`id`, `content`) VALUES
 Note: It will empty the table first (TRUNCATE) !
 
 
-#####Automatically restore a table from a given sql file#####
+##### Automatically restore a table from a given sql file
 
 ```php
 $please->autoRestore($tableName, $filePath, $delay);
@@ -143,7 +143,7 @@ Next db reset: 2014-04-22 23:58:53
 ```
 
 
-#####Disconnect from database#####
+##### Disconnect from database
 
 Unset the class and you'll be automatically disconnected from the database.
 
